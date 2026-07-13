@@ -1004,4 +1004,12 @@ h4 {
     opacity: 1;
     transform: none;
   }
+
+   .home-section h2 {
+  margin-bottom: 18px;
+}
+
+.card + .card {
+  margin-top: 18px;
+}
 }
