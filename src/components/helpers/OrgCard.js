@@ -4,8 +4,8 @@ import { useState } from "react";
 // a "read more" toggle for long descriptions.
 export default function OrgCard({ item }) {
   const [open, setOpen] = useState(false);
-  const long = item.body && item.body.length > 220;
-  const text = open || !long ? item.body : item.body.slice(0, 220).trimEnd() + "…";
+  const long = item.body && item.body.length > 160;
+  const text = open || !long ? item.body : item.body.slice(0, 110).trimEnd() + "…";
 
   return (
     <div className="card">
