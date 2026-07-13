@@ -24,7 +24,7 @@ const profile = {
   ],
 
   // Hero photo. Swap /images/keshav-hero.jpg with your own photo later.
-  photo: "/images/keshav-hero.jpg",
+  photo: "images/keshav-hero.jpg",
 
   // Contact links (GitHub + Instagram intentionally left out).
   contacts: [
