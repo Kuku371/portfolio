@@ -15,7 +15,7 @@ export default function Navbar() {
     <header className="nav">
       <div className="wrap nav__inner">
         <NavLink to="/" className="nav__brand" onClick={() => setOpen(false)}>
-          keshav<span className="dot">.</span>k
+          Keshav Karumbunathan
         </NavLink>
 
         <button
