@@ -141,10 +141,7 @@ h4 {
   color: var(--page-accent);
   text-transform: lowercase;
 }
-.eyebrow::before {
-  content: "// ";
-  opacity: 0.6;
-}
+
 
 .page-head {
   padding: 88px 0 8px;
@@ -534,7 +531,7 @@ h4 {
 /* ----------------------------- Highlights ------------------------------ */
 .highlights {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
 }
 .highlight {
@@ -699,6 +696,11 @@ h4 {
   margin-top: 12px;
   font-family: var(--mono);
   font-size: 0.82rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text);
+  cursor: pointer;
 }
 .card__link::after {
   content: " ↗";
@@ -723,11 +725,13 @@ h4 {
   font-family: var(--mono);
   font-size: 1.05rem;
   color: var(--text);
+  text-align: center;
 }
 .comp-group__note {
   color: var(--text-muted);
   font-size: 0.85rem;
   font-family: var(--mono);
+  text-align: center;
 }
 .comp-list {
   list-style: none;
