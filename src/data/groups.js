@@ -99,6 +99,16 @@ export const camps = [
       "APEX Maths is an intensive three-week residential program in Reșița, Romania that gives a taste of real mathematical research under internationally recognized professors, rather than competition training. A small international cohort explores advanced topics like arithmetic and topology through lectures and independent exploration.",
   },
   {
+    initials: "MQ",
+    logo: "images/mq.png",
+    title: "High School Fellow",
+    org: "MathQuantum RTG",
+    dates: "2025",
+    link: "https://mathquantum.umd.edu",
+    body: 
+      "MathQuantum is an NSF-funded Research Training Group at IPST helping mathematicians enter Quantum Information Science (QIS), blending education with collaborative research across three research themes. I joined the 2025 High School Fellowship cohort — a ~2-week program of mentored research, coursework, and seminars applying math to QIS, plus access to quantum-industry internships, outreach, and networking.",
+  },
+  {
     initials: "MP",
     logo: "images/mp.png",
     title: "Participant",
