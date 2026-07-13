@@ -7,6 +7,7 @@
 export const currentGroups = [
   {
     initials: "PU",
+    logo: "images/primes.png",
     title: "PRIMES-USA Scholar",
     org: "MIT",
     dates: "Jan 2026 – Present",
@@ -16,6 +17,7 @@ export const currentGroups = [
   },
   {
     initials: "OMC",
+    logo: "images/omc.png",
     title: "Co-Leader",
     org: "Oregon Math Circle",
     dates: "2024 – Present",
@@ -25,6 +27,7 @@ export const currentGroups = [
   },
   {
     initials: "MD",
+    logo: "images/mathdash.png",
     title: "Mathematics Mentor & Intern",
     org: "MathDash",
     dates: "Jun 2025 – Present",
@@ -34,6 +37,7 @@ export const currentGroups = [
   },
   {
     initials: "RISE",
+    logo: "images/thprd.png",
     title: "RISE Volunteer — Camp Rivendale",
     org: "THPRD",
     dates: "Present",
@@ -43,6 +47,7 @@ export const currentGroups = [
   },
   {
     initials: "OMMC",
+    logo: "images/ommc.png",
     title: "Problem Writing & Staff",
     org: "Online Monmouth Math Competition",
     dates: "2025 – Present",
@@ -52,6 +57,7 @@ export const currentGroups = [
   },
   {
     initials: "728",
+    logo: "images/bsa.png",
     title: "Life Scout — Troop 728",
     org: "Scouting America",
     dates: "2021 – Present",
@@ -61,6 +67,7 @@ export const currentGroups = [
   },
   {
     initials: "TDPS",
+    logo: "images/tdps.png",
     title: "Swimmer — Green Squad",
     org: "The Dolphins Portland Swimming",
     dates: "2015 – Present",
@@ -73,6 +80,7 @@ export const currentGroups = [
 export const camps = [
   {
     initials: "MOP",
+    logo: "images/maa.png",
     title: "Qualifier — Blue Group",
     org: "Mathematical Olympiad Program (MOP)",
     dates: "2025 & 2026",
@@ -82,6 +90,7 @@ export const camps = [
   },
   {
     initials: "APEX",
+    logo: "images/apex.png",
     title: "Participant",
     org: "APEX Maths — Reșița, Romania",
     dates: "2026",
@@ -91,6 +100,7 @@ export const camps = [
   },
   {
     initials: "MP",
+    logo: "images/mp.png",
     title: "Participant",
     org: "MathPath",
     dates: "2022 & 2023",
@@ -103,6 +113,7 @@ export const camps = [
 export const previousGroups = [
   {
     initials: "TLC",
+    logo: "images/tlc.png",
     title: "Volunteer — Teen Library Council",
     org: "Beaverton City Library",
     dates: "2023 – 2025",
@@ -112,6 +123,7 @@ export const previousGroups = [
   },
   {
     initials: "MW",
+    logo: "images/mathwizards.png",
     title: "Founder",
     org: "MathWizards",
     dates: "2024",
