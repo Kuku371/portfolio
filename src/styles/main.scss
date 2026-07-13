@@ -134,6 +134,7 @@ h4 {
 
 /* code-style eyebrow label, e.g. "// studies" */
 .eyebrow {
+  display: none;
   font-family: var(--mono);
   font-size: 0.8rem;
   font-weight: 500;
