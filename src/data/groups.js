@@ -73,12 +73,12 @@ export const currentGroups = [
 export const camps = [
   {
     initials: "MOP",
-    title: "Qualifier — Green Group",
+    title: "Qualifier — Blue Group",
     org: "Mathematical Olympiad Program (MOP)",
     dates: "2025 & 2026",
     link: "https://web.evanchen.cc/mop.html",
     body:
-      "MOP is an intensive summer program run by the MAA that trains and selects the U.S. team for the International Mathematical Olympiad. I qualified for the Green group as a 9th grader via a silver-medal USAMO score, earned a silver medal on the ELMO, and went through daily olympiad training and mock exams.",
+      "MOP is an intensive summer program run by the MAA that trains and selects the U.S. team for the International Mathematical Olympiad. I qualified for the Green group as a 9th grader via a silver-medal USAMO score, earned a silver medal on the ELMO, and returned as a 10th grader in the Blue group after another daily cycle of olympiad training and mock exams.",
   },
   {
     initials: "APEX",
