@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quantum Connect 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a1416; --bg2:#0e1d20; --surface:#102224; --text:#e7f0f0;
+    --muted:#93a8ac; --border:rgba(255,255,255,.12); --border2:rgba(255,255,255,.2);
+    --blue:#56b6e6; --green:#4fd6a3; --red:#e5534b; --yellow:#f2c14e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:radial-gradient(60% 60% at 20% 10%,rgba(79,214,163,.08),transparent 70%),
+               radial-gradient(60% 60% at 85% 15%,rgba(86,182,230,.08),transparent 70%),var(--bg);
+    color:var(--text); font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .mono{font-family:'JetBrains Mono',monospace}
+  h1{font-family:'JetBrains Mono',monospace; letter-spacing:-.02em}
+  .screen{display:none; width:100%; max-width:1080px}
+  .screen.active{display:block}
+
+  /* menu */
+  #menu{text-align:center}
+  #menu h1{font-size:clamp(2rem,6vw,3.4rem); background:linear-gradient(120deg,var(--green),var(--blue));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+  #menu .sub{color:var(--muted); font-family:'JetBrains Mono',monospace; margin-top:10px; font-size:.9rem}
+  .btns{display:flex; flex-direction:column; gap:12px; max-width:340px; margin:34px auto 0}
+  button.q{
+    font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text);
+    background:var(--surface); border:1px solid var(--border2); border-radius:12px;
+    padding:14px 18px; cursor:pointer; transition:.2s; text-align:left;
+  }
+  button.q:hover{border-color:var(--green); transform:translateY(-2px)}
+  button.q .lv{color:var(--green)}
+  button.q.blue:hover{border-color:var(--blue)}
+  button.q.ghost{background:transparent; text-align:center; color:var(--muted)}
+  button.q.ghost:hover{color:var(--text)}
+  .credits{max-width:560px; margin:24px auto 0; color:var(--muted); line-height:1.7; text-align:left;
+    background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 24px}
+  .credits b{color:var(--text)}
+
+  /* game */
+  #game .top{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:12px; flex-wrap:wrap}
+  #game .top h1{font-size:1.15rem}
+  .toolbar{display:flex; gap:8px}
+  .toolbar button{font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text);
+    background:var(--surface); border:1px solid var(--border2); border-radius:9px; padding:7px 12px; cursor:pointer; transition:.2s}
+  .toolbar button:hover{border-color:var(--blue)}
+  .layout{display:grid; grid-template-columns:320px 1fr; gap:20px; align-items:start}
+  .tutorial{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; min-height:200px;
+    display:flex; flex-direction:column}
+  .tutorial .body{flex:1; color:var(--text); line-height:1.65; font-size:.95rem; white-space:pre-wrap}
+  .tutorial .nav{display:flex; justify-content:space-between; align-items:center; margin-top:16px}
+  .tutorial .nav span{color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:.8rem}
+  .tutorial .nav button{font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text);
+    background:transparent; border:1px solid var(--border2); border-radius:8px; padding:6px 11px; cursor:pointer}
+  .tutorial .nav button:hover{border-color:var(--green)}
+  .boardwrap{background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:10px; overflow:auto}
+  canvas{display:block; max-width:100%; touch-action:manipulation}
+  .banner{margin-top:14px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:1.2rem; min-height:1.6em}
+  .banner .again{margin-left:14px}
+  .hint{color:var(--muted); font-size:.82rem; margin-top:8px; text-align:center; font-family:'JetBrains Mono',monospace}
+  @media(max-width:820px){ .layout{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <!-- ===================== MENU ===================== -->
+  <section id="menu" class="screen active">
+    <h1>Quantum Connect 4</h1>
+    <div class="sub">a quantum twist on connect 4 · two players, one screen</div>
+    <div class="btns">
+      <button class="q" onclick="startGame(0)"><span class="lv">level 1</span> — superposition</button>
+      <button class="q" onclick="startGame(1)"><span class="lv">level 2</span> — + entanglement</button>
+      <button class="q" onclick="startGame(2)"><span class="lv">level 3</span> — + quantum gates</button>
+      <button class="q ghost" onclick="toggleCredits()">credits &amp; info</button>
+    </div>
+    <div id="creditsBox" class="credits" style="display:none">
+      <b>Quantum Connect 4</b><br/>
+      A quantum twist on the classic Connect 4 game where coins exist in superposition until measured.<br/><br/>
+      <b>Features</b><br/>
+      • Superposition coins with quantum probabilities<br/>
+      • Entanglement between quantum states<br/>
+      • Quantum gates (Pauli-X and Hadamard)<br/><br/>
+      Originally built in Python with Tkinter &amp; Turtle; ported to the web.
+    </div>
+  </section>
+
+  <!-- ===================== GAME ===================== -->
+  <section id="game" class="screen">
+    <div class="top">
+      <h1>Quantum Connect 4</h1>
+      <div class="toolbar">
+        <button onclick="restart()">↻ restart</button>
+        <button onclick="toMenu()">◀ menu</button>
+      </div>
+    </div>
+    <div class="layout">
+      <div class="tutorial">
+        <div class="body mono" id="tutBody"></div>
+        <div class="nav">
+          <button onclick="prevSlide()">◀ back</button>
+          <span id="tutCount"></span>
+          <button onclick="nextSlide()">next ▶</button>
+        </div>
+      </div>
+      <div>
+        <div class="boardwrap">
+          <canvas id="cv" width="780" height="560"></canvas>
+        </div>
+        <div class="banner mono" id="banner"></div>
+        <div class="hint" id="hint">pick a coin on the right, then click a column to drop it</div>
+      </div>
+    </div>
+  </section>
+
+<script>
+/* ------------------------- config ------------------------- */
+const COLS=8, ROWS=8;
+const PROBS=[[1.0,0],[0.75,0.25],[0.5,0.5]];
+const PILE_COUNTS={1:12,0.75:14,0.5:6};
+const TUT=[
+ [
+  "Welcome to Superposition Mode!",
+  "Each coin is a superposition of red and yellow, shown by how the circle is split. You have a limited number of each coin type.",
+  "After the board fills, superposition coins are measured one by one and collapse to red or yellow. A coin in state [a,b] collapses to your color with probability a² and the opponent's with b². Coins collapse left to right, bottom to top until there is a winner.",
+  "To play a move, pick the coin you want on the right, then click the column you want to drop it in. Pure (full) coins can win during play; superposition coins are resolved in the collapse phase."
+ ],
+ [
+  "Welcome to Entanglement Mode!",
+  "Each coin is a superposition of red and yellow, shown by how the circle is split. You have a limited number of each coin type.",
+  "After the board fills, superposition coins are measured one by one and collapse to red or yellow (a² / b²), left to right, bottom to top.",
+  "Pick a coin on the right, then click a column to drop it.",
+  "Sometimes a coin you place becomes entangled with another, shown by a matching number on both. Whichever collapses first sets the state of both at once."
+ ],
+ [
+  "Welcome to Quantum Gates!",
+  "Each coin is a superposition of red and yellow, shown by how the circle is split. You have a limited number of each coin type.",
+  "After the board fills, superposition coins are measured one by one and collapse to red or yellow (a² / b²), left to right, bottom to top.",
+  "Pick a coin on the right, then click a column to drop it. Coins can also become entangled — matching numbers collapse together.",
+  "Some columns are marked with a gate (X or H) at the top. Dropping a coin there transforms its state.\n\nPauli-X = [[0,1],[1,0]] flips the coin's color. Hadamard = [[1,1],[1,-1]]/√2 turns a pure coin into a 50/50 and vice-versa. The gate is applied as G·v to the coin's state vector v."
+ ]
+];
+
+/* ------------------------- state ------------------------- */
+let board, placed, moveCount, mode, entIndex, nonEnt, ent, gated, turn, selProb, slide, busy;
+let pileHit=[]; // clickable pile rectangles
+
+function resetState(m){
+  mode=m;
+  board=Array.from({length:ROWS},()=>Array(COLS).fill(null));
+  placed=[[],[],[],[],[],[],[]]; // 0 yel-pure,1 yel.75,2 half,3 red.75,4 red-pure,5 yel-heavy,6 red-heavy
+  moveCount=0; entIndex=1; nonEnt=[]; ent=[]; gated=[]; turn="red"; selProb=1.0; slide=0; busy=false;
+  piles={red:{},yellow:{}};
+  for(const col of ["red","yellow"]) for(const p of [1,0.75,0.5]) piles[col][p]=PILE_COUNTS[p];
+  if(mode===2){
+    for(let c=0;c<COLS;c++){
+      const rnd=randint(0,1000);
+      if(rnd<300) gated.push([c,"X"]);
+      else if(rnd<500) gated.push([c,"H"]);
+    }
+  }
+}
+let piles;
+
+/* ------------------------- helpers ------------------------- */
+function randint(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function inList(list,r,c){return list.some(e=>e[0]===r&&e[1]===c);}
+function removeCell(list,r,c){const i=list.findIndex(e=>e[0]===r&&e[1]===c); if(i>=0)list.splice(i,1);}
+function sleep(ms){return new Promise(res=>setTimeout(res,ms));}
+function gateAt(col,type){return gated.some(g=>g[0]===col&&g[1]===type);}
+
+/* ------------------------- layout ------------------------- */
+const cv=document.getElementById("cv");
+const ctx=cv.getContext("2d");
+const X0=24, Y0=64, TILE=52, R=TILE/2-4;
+const PX=475; // piles column x
+
+function cellCenter(r,c){ return [X0+c*TILE+TILE/2, Y0+(ROWS-1-r)*TILE+TILE/2]; }
+
+/* ------------------------- drawing ------------------------- */
+function drawCoin(cx,cy,color,prob,radius=R,ringOnly=false){
+  const fill=color==="red"?"var(--red)":color==="yellow"?"var(--yellow)":color;
+  const otherName=color==="red"?"yellow":"red";
+  const other=otherName==="red"?getCSS("--red"):getCSS("--yellow");
+  const main=color==="red"?getCSS("--red"):color==="yellow"?getCSS("--yellow"):color;
+  if(ringOnly){
+    ctx.beginPath(); ctx.arc(cx,cy,radius+3,0,Math.PI*2);
+    ctx.lineWidth=4; ctx.strokeStyle=getCSS("--blue"); ctx.stroke();
+    return;
+  }
+  // base (other color) full circle
+  ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2); ctx.fillStyle=other; ctx.fill();
+  // main color wedge = prob fraction, starting at top going clockwise
+  if(prob>0){
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,radius,-Math.PI/2,-Math.PI/2+prob*Math.PI*2);
+    ctx.closePath(); ctx.fillStyle=main; ctx.fill();
+  }
+  // outline
+  ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2);
+  ctx.lineWidth=2; ctx.strokeStyle="#0a1416"; ctx.stroke();
+}
+let _probe;
+function getCSS(v){
+  if(!_probe){_probe=document.createElement("div");document.body.appendChild(_probe);}
+  _probe.style.color="var("+v+")";
+  return getComputedStyle(_probe).color;
+}
+
+function render(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  // grid
+  ctx.strokeStyle="rgba(255,255,255,.18)"; ctx.lineWidth=2;
+  for(let r=0;r<=ROWS;r++){ ctx.beginPath(); ctx.moveTo(X0,Y0+r*TILE); ctx.lineTo(X0+COLS*TILE,Y0+r*TILE); ctx.stroke(); }
+  for(let c=0;c<=COLS;c++){ ctx.beginPath(); ctx.moveTo(X0+c*TILE,Y0); ctx.lineTo(X0+c*TILE,Y0+ROWS*TILE); ctx.stroke(); }
+  // gate labels
+  ctx.font="700 15px 'JetBrains Mono',monospace"; ctx.textAlign="center"; ctx.textBaseline="middle";
+  for(const g of gated){ ctx.fillStyle=g[1]==="X"?getCSS("--blue"):getCSS("--green");
+    ctx.fillText(g[1], X0+g[0]*TILE+TILE/2, Y0-16); }
+  // coins
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+    const t=board[r][c]; if(!t) continue;
+    const [cx,cy]=cellCenter(r,c);
+    drawCoin(cx,cy,t[0],t[1]);
+  }
+  // entangled numbers
+  ctx.font="700 13px 'JetBrains Mono',monospace"; ctx.fillStyle="#0a1416";
+  for(const e of ent){ const [cx,cy]=cellCenter(e[0],e[1]); ctx.fillText(String(e[2]),cx,cy); }
+  drawPiles();
+}
+
+function drawPiles(){
+  ctx.textAlign="left"; ctx.textBaseline="middle";
+  ctx.font="700 18px 'JetBrains Mono',monospace";
+  ctx.fillStyle=turn==="red"?getCSS("--red"):getCSS("--yellow");
+  ctx.fillText(turn.charAt(0).toUpperCase()+turn.slice(1)+"'s turn", PX, 34);
+
+  ctx.font="500 12px 'JetBrains Mono',monospace";
+  ctx.fillStyle="var(--muted)";
+  pileHit=[];
+  const boxW=280, boxH=92;
+  for(let i=0;i<PROBS.length;i++){
+    const p=PROBS[i][0];
+    const bx=PX-8, by=68+i*104;
+    // box
+    ctx.beginPath(); roundRect(bx,by,boxW,boxH,12);
+    ctx.fillStyle="rgba(255,255,255,.03)"; ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeStyle = (p===selProb)?getCSS("--green"):"rgba(255,255,255,.16)";
+    ctx.stroke();
+    pileHit.push({p,x:bx,y:by,w:boxW,h:boxH});
+    // coin swatch
+    drawCoin(bx+40,by+boxH/2,turn,p,24);
+    // amplitude vector
+    const a=Math.sqrt(p).toFixed(2), b=Math.sqrt(1-p).toFixed(2);
+    ctx.fillStyle="var(--text)"; ctx.font="500 14px 'JetBrains Mono',monospace";
+    ctx.textAlign="left";
+    ctx.fillText("[ "+a+" , "+b+" ]", bx+80, by+boxH/2-10);
+    // count
+    ctx.fillStyle="var(--muted)"; ctx.font="500 13px 'JetBrains Mono',monospace";
+    ctx.fillText("remaining: "+piles[turn][p], bx+80, by+boxH/2+14);
+  }
+}
+function roundRect(x,y,w,h,r){
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* ------------------------- input ------------------------- */
+cv.addEventListener("click",e=>{
+  if(busy) return;
+  const rect=cv.getBoundingClientRect();
+  const sx=cv.width/rect.width, sy=cv.height/rect.height;
+  const x=(e.clientX-rect.left)*sx, y=(e.clientY-rect.top)*sy;
+
+  // pile selection
+  for(const h of pileHit){
+    if(x>=h.x&&x<=h.x+h.w&&y>=h.y&&y<=h.y+h.h){ selProb=h.p; render(); return; }
+  }
+  // board
+  if(x<X0||x>X0+COLS*TILE||y<Y0||y>Y0+ROWS*TILE) return;
+  const col=Math.floor((x-X0)/TILE);
+  if(col<0||col>=COLS) return;
+  drop(col);
+});
+
+/* ------------------------- game logic ------------------------- */
+function findEmptyRow(col){ for(let r=0;r<ROWS;r++) if(board[r][col]===null) return r; return null; }
+
+function drop(col){
+  const row=findEmptyRow(col);
+  if(row===null) return;
+  if(piles[turn][selProb]<=0){ flash("out of that coin — pick another"); return; }
+
+  piles[turn][selProb]-=1;
+  moveCount+=1;
+
+  if(mode===2 && gateAt(col,"X")){
+    const idx = (turn==="red") ? Math.round(4-4*selProb) : Math.round(4*selProb);
+    placed[idx].push([row,col]);
+    board[row][col]=[ (turn==="yellow"?"red":"yellow"), selProb ];
+  } else if(mode===2 && gateAt(col,"H")){
+    if(selProb===1.0){ board[row][col]=[turn,0.5]; placed[2].push([row,col]); selProb=0.5; }
+    else if(selProb===0.5){ board[row][col]=[turn,1.0]; placed[turn==="red"?4:0].push([row,col]); selProb=1.0; }
+    else { board[row][col]=[turn,0.96]; placed[turn==="red"?6:5].push([row,col]); selProb=0.96; }
+  } else {
+    board[row][col]=[turn,selProb];
+    const idx = (turn==="yellow") ? Math.round(4-4*selProb) : Math.round(4*selProb);
+    placed[idx].push([row,col]);
+  }
+
+  if(mode>=1 && selProb!==1.0){
+    if(randint(0,1000)<150 && nonEnt.length>0){
+      const partner=nonEnt.splice(randint(0,nonEnt.length-1),1)[0];
+      ent.push([partner[0],partner[1],entIndex]);
+      ent.push([row,col,entIndex]);
+      entIndex+=1;
+    } else {
+      nonEnt.push([row,col]);
+    }
+  }
+
+  // reset selProb back to a sensible default for the next player if a gate mutated it away
+  const w=checkWin();
+  if(w==="red"||w==="yellow"){ render(); return finish(w); }
+  turn = turn==="red" ? "yellow" : "red";
+  // keep a valid selection for the new turn
+  if(!(selProb===1.0||selProb===0.75||selProb===0.5)) selProb=1.0;
+  render();
+
+  if(moveCount===ROWS*COLS){ collapsePhase(); }
+}
+
+async function collapsePhase(){
+  busy=true;
+  document.getElementById("hint").textContent="board full — measuring superposition coins…";
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      let val=null;
+      if(inList(placed[1],r,c)) val=[1,250];
+      else if(inList(placed[2],r,c)) val=[2,500];
+      else if(inList(placed[3],r,c)) val=[3,750];
+      else if(inList(placed[5],r,c)) val=[5,34];
+      else if(inList(placed[6],r,c)) val=[6,966];
+      if(!val) continue;
+
+      // show measurement ring
+      render();
+      const [cx,cy]=cellCenter(r,c); drawCoin(cx,cy,"blue",1,R,true);
+      await sleep(650);
+
+      const color = (randint(1,1000)<=val[1]) ? "red" : "yellow";
+      const target = color==="red"?4:0;
+      board[r][c]=[color,1.0];
+      placed[target].push([r,c]);
+      removeCell(placed[val[0]],r,c);
+
+      // entangled partners collapse together
+      const here=ent.filter(e=>e[0]===r&&e[1]===c);
+      for(const e of here){
+        const partners=ent.filter(e2=>e2[2]===e[2] && !(e2[0]===e[0]&&e2[1]===e[1]));
+        for(const p2 of partners){
+          board[p2[0]][p2[1]]=[color,1.0];
+          placed[target].push([p2[0],p2[1]]);
+          for(let k=1;k<=6;k++) removeCell(placed[k],p2[0],p2[1]);
+        }
+        // remove all ent entries for this group
+        ent=ent.filter(e2=>e2[2]!==e[2]);
+      }
+
+      render();
+      await sleep(400);
+      const w=checkWin();
+      if(w){ return finish(w); }
+    }
+  }
+  finish(""); // full board, no line
+}
+
+function checkWin(){
+  const reds=new Set(placed[4].map(e=>e[0]+","+e[1]));
+  const yellows=new Set(placed[0].map(e=>e[0]+","+e[1]));
+  const dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,1],[-1,-1]];
+  function has(set){
+    for(const key of set){
+      const [r,c]=key.split(",").map(Number);
+      for(const [dr,dc] of dirs){
+        if(set.has((r+dr)+","+(c+dc)) && set.has((r+2*dr)+","+(c+2*dc)) && set.has((r+3*dr)+","+(c+3*dc)))
+          return true;
+      }
+    }
+    return false;
+  }
+  const rw=has(reds), yw=has(yellows);
+  if(rw&&yw) return "redyellow";
+  if(rw) return "red";
+  if(yw) return "yellow";
+  return "";
+}
+
+function finish(winner){
+  busy=true;
+  render();
+  const banner=document.getElementById("banner");
+  let msg;
+  if(winner==="red") msg="🔴 Red wins!";
+  else if(winner==="yellow") msg="🟡 Yellow wins!";
+  else msg="It's a draw!";
+  banner.innerHTML = msg + '<button class="again" onclick="restart()" style="font-family:inherit;background:transparent;border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:4px 10px;cursor:pointer">play again</button>';
+  document.getElementById("hint").textContent="";
+}
+function flash(t){ const h=document.getElementById("hint"); h.textContent=t; setTimeout(()=>{ if(!busy)h.textContent="pick a coin on the right, then click a column to drop it"; },1400); }
+
+/* ------------------------- tutorial ------------------------- */
+function renderTutorial(){
+  document.getElementById("tutBody").textContent=TUT[mode][slide];
+  document.getElementById("tutCount").textContent=(slide+1)+" / "+TUT[mode].length;
+}
+function nextSlide(){ slide=(slide+1)%TUT[mode].length; renderTutorial(); }
+function prevSlide(){ slide=(slide-1+TUT[mode].length)%TUT[mode].length; renderTutorial(); }
+
+/* ------------------------- screens ------------------------- */
+function show(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active"); }
+function startGame(m){ resetState(m); document.getElementById("banner").textContent=""; document.getElementById("hint").textContent="pick a coin on the right, then click a column to drop it"; renderTutorial(); show("game"); render(); }
+function restart(){ startGame(mode); }
+function toMenu(){ show("menu"); }
+function toggleCredits(){ const b=document.getElementById("creditsBox"); b.style.display=b.style.display==="none"?"block":"none"; }
+</script>
+</body>
+</html>
