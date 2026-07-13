@@ -46,10 +46,7 @@ function Hero({ onExpand }) {
 
         <div>
           <Reveal>
-            <h1 className="hero__name">
-              {profile.name}
-              <span className="caret">_</span>
-            </h1>
+            <h1 className="hero__name">{profile.name}</h1>
             <div className="hero__role">
               {profile.role} · {profile.location}
             </div>
@@ -171,7 +168,7 @@ export default function Home() {
           >
             <Reveal>
               <div className="eyebrow">highlights</div>
-              <h2>At a glance</h2>
+              <h2>Recognitions</h2>
               <div className="highlights">
                 {profile.highlights.map((h, i) => (
                   <div className="highlight" key={i}>
@@ -187,7 +184,7 @@ export default function Home() {
           <section id="faq" ref={setRef("faq")} className="home-section">
             <Reveal>
               <div className="eyebrow">faq</div>
-              <h2>Questions I get asked</h2>
+              <h2>Frequently Asked Questions</h2>
               <Faq />
             </Reveal>
           </section>
