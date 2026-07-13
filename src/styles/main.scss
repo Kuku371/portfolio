@@ -664,6 +664,9 @@ h4 {
   letter-spacing: -0.02em;
   overflow: hidden;
 }
+.avatar:has(img) {
+  background: #fff;
+}
 .avatar img {
   width: 100%;
   height: 100%;
