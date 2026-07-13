@@ -31,7 +31,7 @@ export const competitionGroups = [
     title: "Computing",
     items: [
       { name: "USACO — Promoted to Gold Division", year: "2026" },
-      { name: "ACSL — First Place Nationally in Junior Division", year: "2023"}
+      { name: "ACSL — First Place Nationally in Junior Division", year: "2023"},
     ],
   },
 ];
