@@ -43,14 +43,6 @@ const projects = [
       },
     ],
   },
-  {
-    title: "Quantum Computing",
-    tags: ["Quantum States", "Algorithms", "MathQuantum"],
-    image: null,
-    body:
-      "Ongoing work in quantum computing spanning quantum states through to algorithms, growing out of my MathQuantum RTG High School Fellowship. More to share here soon.",
-    links: [],
-  },
 ];
 
 export default projects;
