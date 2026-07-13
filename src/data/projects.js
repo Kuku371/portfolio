@@ -7,20 +7,13 @@
 const projects = [
   {
     title: "Quantum Connect 4",
-    tags: ["Python", "tkinter", "turtle", "700+ lines"],
-    image: null, // e.g. "/images/quantum-connect4.png"
+    tags: ["Python", "Web port", "700+ lines"],
+    image: "images/quantum-connect4.png",
     body:
-      "A quantum twist on Connect 4, written individually in Python (700+ lines) using random, math, time, tkinter, and turtle. Three levels introduce coins that exist in a superposition of red and yellow — collapsing on measurement and able to become entangled — plus columns that act as quantum gates. I'm currently adding a one-player mode driven by a custom AI opponent.",
-    links: [
-      {
-        label: "Play (Google Drive)",
-        href: "https://drive.google.com/file/d/1Nzn7_1a_NAUkzgnqBcDpuJzIRZizFmKq/view?usp=sharing",
-      },
-      {
-        label: "Code (Replit)",
-        href: "https://replit.com/@KeshavKarumbu/Quantum-Connect-4",
-      },
-    ],
+      "A quantum twist on Connect 4, written individually in Python (700+ lines). Three levels introduce coins that exist in a superposition of red and yellow — collapsing on measurement and able to become entangled — plus columns that act as quantum gates (Pauli-X and Hadamard). Originally built with tkinter and turtle, the original code was modified into a self-contained browser executable that's playable right here.",
+    playHref: "quantum-connect4.html", // opens the playable web version
+    code: "quantum-connect4.py", // opens the source in a popup
+    links: [],
   },
   {
     title: "Divisibility in Simple Semiring Extensions",
@@ -33,7 +26,7 @@ const projects = [
   {
     title: "Apéry's Theorem",
     tags: ["Paper", "Analytic Number Theory", "Euler Circle"],
-    image: null,
+    image: "images/apery.png",
     body:
       "An expository paper on Apéry's Theorem — the irrationality of ζ(3) — written with Euler Circle in May 2024.",
     links: [
