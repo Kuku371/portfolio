@@ -17,7 +17,7 @@ export const competitionGroups = [
     ],
   },
   {
-    title: "Team & Circle",
+    title: "Team",
     note: "with the Oregon Math Circle",
     items: [
       { name: "ARML — 13th Place Overall Team", year: "2026" },
@@ -52,6 +52,12 @@ export const apScores = [
 
 // Research (not a paper/project — an ongoing research direction).
 export const research = [
+  {
+    title: "PRIMES-USA Scholar",
+    mentor: "MIT PRIMES-USA, under Dr. Felix Gotti",
+    body:
+      "Selected as one of ~40 students for the math research track of MIT PRIMES-USA. Researching divisibility in the multiplicative structure of simple semiring extensions under the mentorship of Dr. Felix Gotti.",
+  },
   {
     title: "High-Dimensional Probability",
     mentor: "Dr. Shravas Rao, Portland State University",
