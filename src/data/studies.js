@@ -6,14 +6,16 @@
 // Grouped competition results. Each group is a titled list.
 export const competitionGroups = [
   {
-    title: "Olympiad & National",
+    title: "Olympiad & Competition Math",
     items: [
-      { name: "USAMTS Perfect Scorer", year: "2026" },
-      { name: "AMC 10/12 Distinguished Honor Roll", year: "2026" },
-      { name: "AIME Qualifier", year: "2026" },
-      { name: "USAMO Silver Medalist", year: "2026" },
-      { name: "MOP Qualifier", year: "2026" },
+      { name: "2x USAMO Silver Medalist", year: "2025,2026" },
+      { name: "2x MOP Qualifier", year: "2025,2026" },
       { name: "USA TST Group Qualifier", year: "2027" },
+      { name: "USAMTS Perfect Scorer", year: "2026" },
+      { name: "HMMT — Top 30 Combinatorics", year: "2026" },
+      { name: "ELMO Silver Medalist", year: "2025" },
+      { name: "4x AIME Qualifier", year: "2023,2024,2025,2026" },
+      { name: "4x AMC 10/12 Distinguished Honor Roll", year: "2023,2024,2025,2026" },
     ],
   },
   {
@@ -21,13 +23,16 @@ export const competitionGroups = [
     note: "with the Oregon Math Circle",
     items: [
       { name: "ARML — 13th Place Overall Team", year: "2026" },
-      { name: "HMMT — Top 30 Combinatorics", year: "2026" },
-      { name: "CMIMC — TCS Round Winner", year: "" },
+      { name: "SMT — 6th Place Overall Team", year: "2025" },
+      { name: "CMIMC — Theoretical CS Round Winner", year: "2026" },
     ],
   },
   {
     title: "Computing",
-    items: [{ name: "USACO — Promoted to Gold Division", year: "2026" }],
+    items: [
+      { name: "USACO — Promoted to Gold Division", year: "2026" },
+      { name: "ACSL - First Place Nationally in Junior Division"}
+    ],
   },
 ];
 
@@ -40,6 +45,7 @@ export const coursework = [
   "Discrete Mathematics",
   "Analytic Number Theory",
   "Group Theory",
+  "Topology",
 ];
 
 // AP exam scores.
@@ -62,6 +68,6 @@ export const research = [
     title: "High-Dimensional Probability",
     mentor: "Dr. Shravas Rao, Portland State University",
     body:
-      "Ongoing research in probability theory with Dr. Shravas Rao of Portland State University. The work sits at the intersection of linear algebra and probability, drawing on Roman Vershynin's High-Dimensional Probability and related papers for inspiration and direction.",
+      "Ongoing research in probability theory with Dr. Shravas Rao of Portland State University. The work combines linear algebra and probability, drawing on Roman Vershynin's High-Dimensional Probability and related papers for inspiration.",
   },
 ];
