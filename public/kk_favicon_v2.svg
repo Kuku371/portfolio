@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4FCCA6"/>
+      <stop offset="100%" stop-color="#57B8DD"/>
+    </linearGradient>
+    <linearGradient id="letterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4FD4A0"/>
+      <stop offset="100%" stop-color="#52C4C6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rounded square background with gradient border -->
+  <rect x="16" y="16" width="480" height="480" rx="105" ry="105"
+        fill="#0A1416" stroke="url(#borderGrad)" stroke-width="14"/>
+
+  <!-- kk lettering -->
+  <text
+    x="50%"
+    y="58%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-weight="700"
+    font-size="200"
+    fill="url(#letterGrad)"
+    letter-spacing="-6"
+  >kk</text>
+</svg>
