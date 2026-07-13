@@ -18,7 +18,7 @@ const projects = [
   {
     title: "Divisibility in Simple Semiring Extensions",
     tags: ["Research", "Abstract Algebra", "MIT PRIMES-USA"],
-    image: null,
+    image: "images/mcd.png",
     body:
       "My MIT PRIMES-USA research project, studying divisibility in the multiplicative structure of simple semiring extensions under the mentorship of Dr. Felix Gotti. Paper in progress.",
     links: [{ label: "Paper — coming soon", href: null }],
