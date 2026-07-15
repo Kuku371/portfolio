@@ -16,6 +16,7 @@ export const competitionGroups = [
       { name: "ELMO Silver Medalist", year: "2025" },
       { name: "4x AIME Qualifier", year: "2023,2024,2025,2026" },
       { name: "4x AMC 10/12 Distinguished Honor Roll", year: "2023,2024,2025,2026" },
+      { name: "2x Mathcounts Nationals Qualifier — 15th & 44th Place Individually", year: "2023,2024" },
     ],
   },
   {
