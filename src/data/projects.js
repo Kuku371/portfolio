@@ -27,7 +27,6 @@ const projects = [
     title: "CWRU Freshman Orientation Puzzle Hunt",
     tags: ["Puzzle Writing", "Co-author"],
     image: "images/cwru.png",
-    image: null,
     body:
       "Co-wrote a puzzle hunt with my sister for Case Western Reserve University's freshman orientation, run for over 200 students. I authored three of the puzzles, designing each so its solving path stayed discoverable for newcomers without giving itself away.",
     links: [
