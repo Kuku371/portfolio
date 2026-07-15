@@ -75,6 +75,16 @@ export const currentGroups = [
     body:
       "A USA Swimming–sanctioned club. I've swum competitively since 2017, qualifying for every OSI state short-course championship in multiple events, most recently placing 10th overall in the 100-yard backstroke finals at the state meet. I've been part of the Green Squad, the Dolphins' top group, since 2023.",
   },
+  {
+    initials: "JPC",
+    logo: "images/jesuit.png",
+    title: "Club Leader",
+    org: "Jesuit High School Puzzle Club",
+    dates: "Present",
+    link: null,
+    body:
+      "I lead the puzzle club at Jesuit High School, where we solve and write puzzle hunts — cryptics, wordplay, logic, and the sort of lateral-thinking puzzles that hide their own instructions. An avid hunter myself, I also write puzzles for outside hunts.",
+  },
 ];
 
 export const camps = [
