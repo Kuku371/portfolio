@@ -78,12 +78,12 @@ export const currentGroups = [
   {
     initials: "JPC",
     logo: "images/jesuit.png",
-    title: "Club Leader",
+    title: "Founder & Leader",
     org: "Jesuit High School Puzzle Club",
     dates: "Present",
     link: null,
     body:
-      "I lead the puzzle club at Jesuit High School, where we solve and write puzzle hunts — cryptics, wordplay, logic, and the sort of lateral-thinking puzzles that hide their own instructions. An avid hunter myself, I also write puzzles for outside hunts.",
+      "I founded and lead the puzzle club at Jesuit High School, where we solve and write puzzle hunts — cryptics, wordplay, logic, and the sort of lateral-thinking puzzles that hide their own instructions. An avid hunter myself, I also write puzzles for outside hunts.",
   },
 ];
 
