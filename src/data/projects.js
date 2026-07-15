@@ -24,6 +24,19 @@ const projects = [
     links: [{ label: "Paper — coming soon", href: null }],
   },
   {
+    title: "CWRU Freshman Orientation Puzzle Hunt",
+    tags: ["Puzzle Writing", "Co-author"],
+    image: null,
+    body:
+      "Co-wrote a puzzle hunt with my sister for Case Western Reserve University's freshman orientation, run for over 200 students. I authored three of the puzzles, designing each so its solving path stayed discoverable for newcomers without giving itself away.",
+    links: [
+      {
+        label: "Read the hunt",
+        href: "https://docs.google.com/document/d/1Jm7aW2JSPzV5-xiGxbR3MWBcpD3glTpitXiUIo6ypbc/edit?usp=sharing",
+      },
+    ],
+  },
+  {
     title: "Apéry's Theorem",
     tags: ["Paper", "Analytic Number Theory", "Euler Circle"],
     image: "images/apery.png",
