@@ -434,7 +434,8 @@ h4 {
   display: grid;
   grid-template-columns: 190px 1fr;
   gap: 40px;
-  padding: 30px 0 40px;
+  padding-top: 30px;
+  padding-bottom: 40px;
 }
 .spy {
   position: sticky;
