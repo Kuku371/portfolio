@@ -45,8 +45,10 @@ export const coursework = [
   "Linear Algebra",
   "Discrete Mathematics",
   "Analytic Number Theory",
+  "Algebraic Number Theory",
   "Group Theory",
   "Topology",
+  "Axiomatic Set Theory",
 ];
 
 // AP exam scores.
