@@ -54,7 +54,7 @@ function Hero({ onExpand }) {
             <p className="hero__blurb">{profile.blurb}</p>
             <blockquote className="hero__quote">
               “{profile.quote}”
-              <cite>— {profile.quoteAuthor}</cite>
+              — {profile.quoteAuthor}
             </blockquote>
             <div className="hero__contacts">
               {profile.contacts.map((c) => (
@@ -86,14 +86,30 @@ function ScrollSpy({ active, onJump }) {
 }
 
 function Faq() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(-1); // nothing open on load
+  const timer = useRef(null);
+
+  const handleToggle = (i) => {
+    clearTimeout(timer.current);
+    if (open === i) {
+      setOpen(-1); // clicking the open one just closes it
+      return;
+    }
+    if (open === -1) {
+      setOpen(i); // nothing open yet — open directly
+      return;
+    }
+    setOpen(-1); // close the current one first...
+    timer.current = setTimeout(() => setOpen(i), 400); // ...then open the new one (matches .acc__panel's 0.4s transition)
+  };
+
   return (
     <div className="accordion">
       {faqs.map((f, i) => (
         <div key={i} className={`acc__item ${open === i ? "open" : ""}`}>
           <button
             className="acc__btn"
-            onClick={() => setOpen(open === i ? -1 : i)}
+            onClick={() => handleToggle(i)}
             aria-expanded={open === i}
           >
             <span>{f.q}</span>
@@ -115,26 +131,45 @@ export default function Home() {
   const [active, setActive] = useState("about");
   const [lightbox, setLightbox] = useState(false);
   const refs = useRef({});
+  const lockRef = useRef(false); // true while a click-jump is settling
+  const lockTimer = useRef(null);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-    );
-    SECTIONS.forEach((s) => {
-      const el = refs.current[s.id];
-      if (el) obs.observe(el);
-    });
-    return () => obs.disconnect();
+    // Active = the last section whose top has scrolled past a line near the top
+    // of the viewport. Basing this on section tops (rather than which section
+    // covers a center band) means a short section like "highlights" stays
+    // selected instead of getting skipped for the section below it.
+    const computeActive = () => {
+      if (lockRef.current) return; // don't fight a click-jump mid-scroll
+      const line = window.innerHeight * 0.3;
+      let current = SECTIONS[0].id;
+      for (const s of SECTIONS) {
+        const el = refs.current[s.id];
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= line) current = s.id;
+      }
+      setActive(current);
+    };
+
+    computeActive();
+    window.addEventListener("scroll", computeActive, { passive: true });
+    window.addEventListener("resize", computeActive);
+    return () => {
+      window.removeEventListener("scroll", computeActive);
+      window.removeEventListener("resize", computeActive);
+    };
   }, []);
 
   const jump = (id) => {
     const el = refs.current[id];
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!el) return;
+    setActive(id); // highlight immediately on click...
+    lockRef.current = true; // ...and hold it there while the smooth scroll runs
+    clearTimeout(lockTimer.current);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    lockTimer.current = setTimeout(() => {
+      lockRef.current = false;
+    }, 700);
   };
 
   const setRef = (id) => (el) => {
