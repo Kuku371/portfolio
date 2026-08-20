@@ -18,7 +18,7 @@ export const currentGroups = [
   {
     initials: "OMC",
     logo: "images/omc.png",
-    title: "Co-Leader",
+    title: "Leader",
     org: "Oregon Math Circle",
     dates: "2024 – Present",
     link: "https://www.oregonmathcircle.org",
@@ -106,7 +106,7 @@ export const camps = [
     dates: "2026",
     link: "https://apexscientific.org/",
     body:
-      "APEX Maths is an intensive three-week residential program in Reșița, Romania that gives a taste of real mathematical research under internationally recognized professors, rather than competition training. A small international cohort explores advanced topics like arithmetic and topology through lectures and independent exploration.",
+      "APEX Maths is an intensive three-week residential program in Reșița, Romania giving a taste of real mathematical research rather than competition training. I studied topology and algebraic number theory in a cohort of six, with lectures from professors across Europe.",
   },
   {
     initials: "MQ",
